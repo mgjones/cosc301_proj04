@@ -20,9 +20,9 @@ struct work_queue_item{
 
 
 // globals //
-struct work_queue_item *head = NULL;
-struct work_queue_item *tail = NULL;
-pthread_mutex_t workmute = PTHREAD_MUTEX_INITIALIZER;
+struct queue *head = NULL;
+struct queue *tail = NULL;
+pthread_mutex_t workmutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t workcond = PTHREAD_COND_INITIALIZER;
 int count = 0;
 
@@ -43,9 +43,33 @@ void usage(const char *progname) {
     exit(0);
 }
 
+//	worker and queue functions	//
+
 void *worker(void* arg){
+	pthread_mutex_lock(&workmutex);
+	while(count == 0){
+		pthread_cond_wait(&workcond, &workmutex);
+	}
+	int sock = removeitem();	
+	pthread_mutex_unlock(&workmutex);
+
+	// respond to request //
+	char *reqbuffer = NULL;
+	int x = getrequest(sock, reqbuffer,1024);
+	if(x == -1)
+		printf("Error: could not get request\n");
+	// check using stat //
+	//	  senddata		//
+	
+	
 	return NULL;
 }
+
+void add(int sock){
+	return;
+}
+
+//	//	//	//	//	//	//	//	//
 
 void runserver(int numthreads, unsigned short serverport) {
     //////////////////////////////////////////////////
@@ -103,7 +127,13 @@ void runserver(int numthreads, unsigned short serverport) {
             */
            ////////////////////////////////////////////////////////
 
-			// write code here //
+
+			pthread_mutex_lock(&workmutex);
+			add(new_sock);
+			count++;
+			pthread_cond_signal(&workcond);
+			pthread_mutex_unlock(&workmutex);
+			
 
 		   ////////////////////////////////////////////////////////
 
