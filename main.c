@@ -43,24 +43,46 @@ void usage(const char *progname) {
     exit(0);
 }
 
-////////// ADD FUNCTION //////////
+////////// ADD FUNCTION ////////// compiled -- not yet tested
+
 void additem(int sock){
+
 	if (head == NULL){
-		struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
-		head = &new_item;
+		struct work_queue_item *new_item = malloc(sizeof(struct work_queue_item));
+		head = new_item; 
 		new_item->sock = sock;
 		new_item->next = NULL;
+		head->next = NULL; 
 	}else{
-		struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
+		struct work_queue_item *new_item = malloc(sizeof(struct work_queue_item));
 		new_item->sock = sock;
-		new_item->next = &head;
-		head = &new_item;
+		new_item->next = head; 
+		head = new_item; 
 	}
+	return;
 }
 
+////////// REMOVE FUNCTION //////////
 
+int removeitem(){
 
+	struct work_queue_item *traverse = head;
+	int i = 0;
 
+	if (tail == NULL){
+		return 0;
+	}else if (head->next == NULL){ // there is only one item in the linked list
+		return tail->sock;
+	}else{
+		
+		for (; i < count - 1; i++){
+			traverse = traverse->next;
+		}
+		tail = traverse;
+		return (traverse + i)->sock; // or traverse + i (pointer arithmetic)
+	}
+	return 0;
+}
 
 void *worker(void* arg){
 	return NULL;
