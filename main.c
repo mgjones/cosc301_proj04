@@ -62,7 +62,7 @@ void additem(int sock){
 	return;
 }
 
-////////// REMOVE FUNCTION //////////
+////////// REMOVE FUNCTION ////////// compiled -- not yet tested
 
 int removeitem(){
 
@@ -79,7 +79,7 @@ int removeitem(){
 			traverse = traverse->next;
 		}
 		tail = traverse;
-		return (traverse + i)->sock; // or traverse + i (pointer arithmetic)
+		return (traverse + i)->sock; 
 	}
 	return 0;
 }
