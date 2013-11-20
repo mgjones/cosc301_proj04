@@ -45,10 +45,17 @@ void usage(const char *progname) {
 
 ////////// ADD FUNCTION //////////
 void additem(int sock){
-	struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
-	new_item->sock = sock;
-	new_item->next = &head;
-	head = &new_item;
+	if (head == NULL){
+		struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
+		head = &new_item;
+		new_item->sock = sock;
+		new_item->next = NULL;
+	}else{
+		struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
+		new_item->sock = sock;
+		new_item->next = &head;
+		head = &new_item;
+	}
 }
 
 
