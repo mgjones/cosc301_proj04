@@ -43,6 +43,18 @@ void usage(const char *progname) {
     exit(0);
 }
 
+////////// ADD FUNCTION //////////
+void additem(int sock){
+	struct work_queue_item new_item = malloc(sizeof(struct work_queue_item));
+	new_item->sock = sock;
+	new_item->next = &head;
+	head = &new_item;
+}
+
+
+
+
+
 void *worker(void* arg){
 	return NULL;
 }
