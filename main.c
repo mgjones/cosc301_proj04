@@ -13,6 +13,21 @@
 #include "network.h"
 
 
+struct work_queue_item{
+	int sock;
+	struct work_queue_item *next;
+};
+
+
+// globals //
+struct work_queue_item *head = NULL;
+struct work_queue_item *tail = NULL;
+pthread_mutex_t workmute = PTHREAD_MUTEX_INITIALIZER;
+pthread_cond_t workcond = PTHREAD_COND_INITIALIZER;
+int count = 0;
+
+
+
 // global variable; can't be avoided because
 // of asynchronous signal interaction
 int still_running = TRUE;
@@ -28,14 +43,25 @@ void usage(const char *progname) {
     exit(0);
 }
 
+void *worker(void* arg){
+	return NULL;
+}
+
 void runserver(int numthreads, unsigned short serverport) {
     //////////////////////////////////////////////////
 
     // create your pool of threads here
 
     //////////////////////////////////////////////////
-    
-    
+
+    pthread_t threads[numthreads];
+	int i = 0;
+	while(i < numthreads){
+		pthread_create(&threads[i],NULL,worker,NULL);
+		i++;
+	}
+	
+    //////////////////////////////////////////////////
     int main_socket = prepare_server_socket(serverport);
     if (main_socket < 0) {
         exit(-1);
@@ -77,6 +103,9 @@ void runserver(int numthreads, unsigned short serverport) {
             */
            ////////////////////////////////////////////////////////
 
+			// write code here //
+
+		   ////////////////////////////////////////////////////////
 
         }
     }
