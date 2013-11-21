@@ -1,3 +1,8 @@
+/*
+ * Nolan Gonzalez and Mariah Jones
+ * November 20, 2013
+*/
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
