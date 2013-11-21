@@ -1,3 +1,9 @@
+/*
+ * Nolan Gonzalez and Mariah Jones
+ * November 20, 2013
+ *
+*/
+
 #include <pthread.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -71,7 +77,8 @@ int removeitem(){
 
 	if (tail == NULL){
 		return 0;
-	}else if (head->next == NULL){ // there is only one item in the linked list
+	// there is only one item in the linked list
+	}else if (head->next == NULL){ 
 		return tail->sock;
 	}else{
 		
@@ -81,6 +88,7 @@ int removeitem(){
 		tail = traverse;
 		return (traverse + i)->sock; 
 	}
+	//free node that was removed 
 	return 0;
 }
 
